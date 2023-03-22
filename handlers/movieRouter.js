@@ -46,44 +46,32 @@ const handleMoviesByYear = (app, Movie) => {
         }
     })
 }
+// get all movies within a limit 
+const handleMoviesWithLimit=(app,Movie)=>{
+    app.get("/movies/limit/:num", (req, resp) => {
+        // set the initiial limit 
+        let limit;
+        if (200<(parseInt(req.params.num))){
+            //console.log(`they inputted a value greater then 200 (${parseInt(req.params.num)})`)
+            limit=200;
+        }else{
+            limit=parseInt(req.params.num);
+        }
+        Movie.find()
+             .limit(limit)
+            .then((data)=>{
+                resp.status(200).json(data);
+         })
+        .catch((err)=>{
+            resp.status(500).json({message:"Unable to connect to movies handle moviews with limits "})
+        });
+    })
+}
 
-
-
-// const handleMoviesByYear = (app, Movie) => {
-//     app.get('/movies/year/:min/:max', (req, res) => {
-//         const moviesInRange = []
-//         const minYear = parseInt(req.params.min)
-//         const maxYear = parseInt(req.params.max)
-//             // const searchYear = minYear
-
-//         const moviePromise = new Promise((resolve, reject) => {
-//             for (let searchYear = minYear; searchYear <= maxYear; searchYear++) {
-//                 Movie.find({ release_date: new RegExp(`^${searchYear}`) })
-//                     .then((movies) => {
-//                         moviesInRange.push(movies)
-//                         res.json(movies)
-//                     })
-//             }
-//             resolve(moviesInRange)
-//         })
-//         moviePromise.then((moviesInRange) => {
-//                 console.log(moviesInRange)
-//                 res.status(200).json(moviesInRange)
-//             })
-//             // console.log(moviesInRange)
-//             // Movie.find({ release_date: { $gte: minYear, $lte: maxYear } })
-//             //     .then((movies) => {
-//             //         console.log(movies)
-//             //         res.status(200).json(movies)
-//             //     })
-//             //     .catch((err) => {
-//             //         res.status(500).json(`No movies found between ${req.params.min} and ${req.params.max}`)
-//             //     })
-//     })
-// }
 
 module.exports = {
     handleAllMovies,
     handleMovieById,
-    handleMoviesByYear
+    handleMoviesByYear,
+    handleMoviesWithLimit
 }
