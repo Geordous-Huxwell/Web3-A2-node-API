@@ -69,7 +69,7 @@ const handleMoviesWithLimit = (app, Movie) => {
 
 
 // returns based on a tmbd_id matches the provided id 
-const handleMoviesByTmbdId = (app, Movie) => {
+const handleMoviesByTmdbId = (app, Movie) => {
         app.get('/movies/tmdb/:id', (req, resp) => {
             Movie.find({ tmdb_id: req.params.id })
                 .then((data) => {
@@ -82,38 +82,39 @@ const handleMoviesByTmbdId = (app, Movie) => {
     }
     // Returns all the movies wgo average ratinfg is between the two supplied values. if min is klarder then max return error message
 const handleMoviesByRatings = (app, Movie) => {
-    app.get('/movies/ratings/:min/:max', async(req, resp) => {
-        Movie.find()
-            .where("ratings.average")
-            .gt(req.params.min)
-            .lt(req.params.max)
+        app.get('/movies/ratings/:min/:max', async(req, resp) => {
+            if (req.params.min > req.params.max) {
+                console.log("min is bigger then max")
+                resp.json({ message: "You put your Minimum value to be bigger then your maxium value" });
+            } else {
+                Movie.find()
+                    .where("ratings.average")
+                    .gt(req.params.min)
+                    .lt(req.params.max)
+                    .then((data) => {
+                        resp.json(data);
+                    })
+                    .catch((err) => {
+                        resp.json({ message: "Unable to connect to movies vis avg ratings" });
+                    });
+            }
+        })
+    }
+    // returns movies whose title contians (somewhere) the provided text. This search should be case insensitive 
+const handleMoviesByTitle = (app, Movie) => {
+    app.get('/movies/title/:title', (req, resp) => {
+
+        Movie.find({ title: new RegExp(req.params.title, 'i') })
             .then((data) => {
-                resp.json(data);
+                if (data.length == 0) {
+                    resp.json({ message: "Invalid input" })
+                } else {
+                    resp.json(data)
+                }
             })
             .catch((err) => {
-                resp.json({ message: "Unable to connect to movies" });
-            });
-        // const moviesInRange = []
-        // const minRating = parseInt(req.params.min)
-        // console.log(minRating);
-        // const maxRating = parseInt(req.params.max)
-
-        // if (minRating > maxRating) {
-        //     res.status(500).json(`Invalid range. Min rating (${req.params.min}) is greater than max rating (${req.params.max}).`)
-        // }
-
-        // for (let searchRating = minRating; searchRating <= maxRating; searchRating++) {
-        //     const movies = await Movie.find({ 'ratings.average' : new RegExp(`^${searchRating}`) })
-        //     moviesInRange.push(...movies)
-
-        //     if (searchRating === maxRating) {
-        //         if (moviesInRange.length === 0) {
-        //             res.status(500).json(`No movies found between ${req.params.min} and ${req.params.max}`)
-        //         } else {
-        //             res.status(200).json(moviesInRange)
-        //         }
-        //     }
-        // }
+                resp.json({ messgae: "Unable to connect to movies via handlemoviesbyTitle" })
+            })
     })
 }
 
@@ -139,7 +140,8 @@ module.exports = {
     handleMovieById,
     handleMoviesByYear,
     handleMoviesWithLimit,
-    handleMoviesByTmbdId,
+    handleMoviesByTmdbId,
     handleMoviesByRatings,
+    handleMoviesByTitle,
     handleMoviesByGenre
 }

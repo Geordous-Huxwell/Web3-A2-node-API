@@ -14,9 +14,10 @@ movieRouter.handleAllMovies(app, Movie)
 movieRouter.handleMovieById(app, Movie)
 movieRouter.handleMoviesByYear(app, Movie)
 movieRouter.handleMoviesWithLimit(app, Movie)
-movieRouter.handleMoviesByTmbdId(app, Movie)
+movieRouter.handleMoviesByTmdbId(app, Movie)
 movieRouter.handleMoviesByRatings(app, Movie)
 movieRouter.handleMoviesByGenre(app, Movie)
+movieRouter.handleMoviesByTitle(app, Movie)
 
 require('./handlers/dataConnector.js').connect()
 const port = process.env.PORT || 3000
