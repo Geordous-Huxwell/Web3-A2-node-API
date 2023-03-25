@@ -14,7 +14,11 @@ const handleMovieById = (app, Movie) => {
     app.get('/movies/:id', (req, res) => {
         Movie.find({ id: req.params.id })
             .then((movie) => {
-                res.status(200).json(movie)
+                if (movie.length === 0) {
+                    res.status(500).json(`No movie found matching ID ${req.params.id}`)
+                } else {
+                    res.status(200).json(movie)
+                }
             })
             .catch((err) => {
                 res.status(500).json(`No movie found matching ID ${req.params.id}`)
@@ -73,7 +77,11 @@ const handleMoviesByTmdbId = (app, Movie) => {
         app.get('/movies/tmdb/:id', (req, resp) => {
             Movie.find({ tmdb_id: req.params.id })
                 .then((data) => {
-                    resp.status(200).json(data)
+                    if (data.length == 0) {
+                        resp.status(500).json({ message: "No movie found matching TMDB ID " + req.params.id })
+                    } else {
+                        resp.status(200).json(data)
+                    }
                 })
                 .catch((err) => {
                     resp.status(500).json({ message: "Unable to connect to movies bc tmbdid styff " })

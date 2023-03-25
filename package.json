@@ -1,24 +1,28 @@
 {
-  "name": "comp4513-w2023-assign2",
-  "version": "1.0.0",
-  "description": "Node Movie Server",
-  "main": "movie-server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mru-comp4513-archive/comp4513-w2023-assign2.git"
-  },
-  "author": "Jillian Bennett & Joel Conley",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mru-comp4513-archive/comp4513-w2023-assign2/issues"
-  },
-  "homepage": "https://github.com/mru-comp4513-archive/comp4513-w2023-assign2#readme",
-  "dependencies": {
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "mongoose": "^7.0.2"
-  }
+    "name": "comp4513-w2023-assign2",
+    "version": "1.0.0",
+    "description": "Node Movie Server",
+    "main": "movie-server.js",
+    "scripts": {
+        "start": "node movie-server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mru-comp4513-archive/comp4513-w2023-assign2.git"
+    },
+    "author": "Jillian Bennett & Joel Conley",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/mru-comp4513-archive/comp4513-w2023-assign2/issues"
+    },
+    "homepage": "https://github.com/mru-comp4513-archive/comp4513-w2023-assign2#readme",
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "mongoose": "^7.0.2"
+    },
+    "engines": {
+        "node": "16.x"
+    }
 }
