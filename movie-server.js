@@ -5,10 +5,11 @@ const ejs = require('ejs')
 const cookieParser = require('cookie-parser');
 const flash = require('express-flash');
 const passport = require('passport')
-const helper= require('./handlers/helpers.js')
+const helper = require('./handlers/helpers.js')
 
 const app = express() // create an express app 
 
+app.set('views', './views');
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use('/static', express.static('public'))
@@ -17,16 +18,17 @@ app.use('/static', express.static('public'))
 const Movie = require('./models/Movie.js')
 const User = require('./models/User.js')
 
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Express session
-app.use(cookieParser('oreos')); 
+app.use(cookieParser('oreos'));
 app.use(
     session({
-        secret: process.env.SECRET, 
-        resave: true, 
+        secret: process.env.SECRET,
+        resave: true,
         saveUninitialized: true
-    }) 
+    })
 );
 // Passport middleware
 app.use(passport.initialize());
@@ -49,36 +51,50 @@ movieRouter.handleMoviesByTmdbId(app, Movie)
 movieRouter.handleMoviesByRatings(app, Movie)
 movieRouter.handleMoviesByGenre(app, Movie)
 movieRouter.handleMoviesByTitle(app, Movie)
-//movieRouter.handleLoginPage(app, User)
+    //movieRouter.handleLoginPage(app, User)
 
 // add site requests?
-app.get('/',helper.ensureAuthenticated, (req,res)=>{
-    res.render('../views/home.ejs',{user: req.user});
+app.get('/', (req, res) => {
+    res.render('../views/home.ejs', { user: req.user });
 })
 
 // login and logout routers 
 //movieRouter.handleLoginPage(app, User)
 
 app.get('/login', (req, res) => {
-    console.log("lalla in app.get login lufe ")
+    console.log("get login")
     res.render('../index.ejs')
 })
-app.post('/login', async(req, resp, next) =>{
-    console.log("lalalla")
-    passport.authenticate('localLogin',{ 
-        successRedirect:'/', 
-        failureRedirect:'/login', 
-        failureFlash:true
-    })(req,resp,next);
+app.post('/login', async(req, resp, next) => {
+    console.log("post login")
+    passport.authenticate('localLogin', function(err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return resp.render('../index.ejs', { message: req.flash('info') });
+        }
+        console.log("user is " + user)
+        req.logIn(user, function(err) {
+            if (err) {
+                return next(err);
+            }
+            return resp.redirect('/');
+        });
+
+        // successRedirect: '/',
+        // failureRedirect: '/login',
+        // failureFlash: true
+    })(req, resp, next);
 });
-app.get('/logout', (req,resp)=>{
-    req.logout(function(err){
-        if(err){
+app.get('/logout', (req, resp) => {
+    req.logout(function(err) {
+        if (err) {
             return next(err);
         }
     });
     req.flash('info', 'your were logged out');
-    resp.render('login',{message: req.flash('info')});
+    resp.render('login', { message: req.flash('info') });
 });
 
 
@@ -88,5 +104,3 @@ const port = process.env.PORT || 3000
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
 })
-
-

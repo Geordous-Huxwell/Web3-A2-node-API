@@ -9,7 +9,10 @@ const localOptions = {
 
 const strategy = new LocalStrategy(localOptions, async(email, password, done) => {
     try {
+        console.log("email", email)
+        console.log("password", password)
         const user = await UserModel.findOne({ email: email });
+        console.log("user", user)
         if (!user) {
             return done(null, false, { message: 'email not found.' });
         }
@@ -21,22 +24,23 @@ const strategy = new LocalStrategy(localOptions, async(email, password, done) =>
 
         return done(null, user, { message: 'login successful.' });
     } catch (error) {
+        console.log("error", error.message)
         return done(error);
     }
 });
-
-// exporting the strategy and renaming it local login 
+console.log("strategy", strategy)
+    // exporting the strategy and renaming it local login 
 passport.use('localLogin', strategy);
-//passport.use(strategy); // localLogin, strategy to handle User login
-passport.serializeUser((user, done) => {done(null, user.email)
+
+passport.serializeUser((user, done) => {
+    console.log('serialized user', user)
+    done(null, user.email)
 });
-// passport.deserializeUser(async(email, done) => {
-//     UserModel.findOne({ email: email })
-//         .then(user => {
-//             done(null, user);
-//         });
-// });
+
 passport.deserializeUser((email, done) => {
     UserModel.findOne({ email: email })
-        .then((user) =>  done(null, user));
+        .then((user) => {
+            console.log('deserialized user', user)
+            done(null, user)
         });
+});
