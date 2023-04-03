@@ -54,14 +54,14 @@ movieRouter.handleMoviesByTitle(app, Movie)
     //movieRouter.handleLoginPage(app, User)
 
 // add site requests?
-app.get('/', (req, res) => {
+app.get('/', helper.ensureAuthenticated, (req, res) => {
     res.render('../views/home.ejs', { user: req.user });
 })
 
 // login and logout routers 
 //movieRouter.handleLoginPage(app, User)
 
-app.get('/login', (req, res) => {
+app.get('/login', helper.redirectLoggedIn, (req, res) => {
     console.log("get login")
     res.render('../index.ejs')
 })
