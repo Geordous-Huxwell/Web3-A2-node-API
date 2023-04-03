@@ -142,6 +142,15 @@ const handleMoviesByGenre = (app, Movie) => {
     })
 }
 
+const handleLoginPage = (app, User) => {
+    app.get('/', (req, res) => {
+        res.render('../index.ejs')
+    })
+}
+
+
+
+
 
 module.exports = {
     handleAllMovies,
@@ -151,5 +160,6 @@ module.exports = {
     handleMoviesByTmdbId,
     handleMoviesByRatings,
     handleMoviesByTitle,
-    handleMoviesByGenre
+    handleMoviesByGenre,
+    handleLoginPage
 }
