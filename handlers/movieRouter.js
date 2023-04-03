@@ -1,5 +1,7 @@
+const helper = require('./helpers.js');
+
 const handleAllMovies = (app, Movie) => {
-    app.get('/movies', (req, res) => {
+    app.get('/movies', helper.ensureAuthenticated , (req, res) => {
         Movie.find()
             .then((movies) => {
                 res.status(200).json(movies)
@@ -11,7 +13,7 @@ const handleAllMovies = (app, Movie) => {
 }
 
 const handleMovieById = (app, Movie) => {
-    app.get('/movies/:id', (req, res) => {
+    app.get('/movies/:id',helper.ensureAuthenticated, (req, res) => {
         Movie.find({ id: req.params.id })
             .then((movie) => {
                 if (movie.length === 0) {
@@ -27,7 +29,7 @@ const handleMovieById = (app, Movie) => {
 }
 
 const handleMoviesByYear = (app, Movie) => {
-        app.get('/movies/year/:min/:max', async(req, res) => {
+        app.get('/movies/year/:min/:max',helper.ensureAuthenticated, async(req, res) => {
             const moviesInRange = []
             const minYear = parseInt(req.params.min)
             const maxYear = parseInt(req.params.max)
@@ -52,7 +54,7 @@ const handleMoviesByYear = (app, Movie) => {
     }
     // get all movies within a limit 
 const handleMoviesWithLimit = (app, Movie) => {
-    app.get('/movies/limit/:num', (req, resp) => {
+    app.get('/movies/limit/:num',helper.ensureAuthenticated, (req, resp) => {
         // set the initiial limit 
         let limit;
         if (200 < (parseInt(req.params.num))) {
@@ -74,7 +76,7 @@ const handleMoviesWithLimit = (app, Movie) => {
 
 // returns based on a tmbd_id matches the provided id 
 const handleMoviesByTmdbId = (app, Movie) => {
-        app.get('/movies/tmdb/:id', (req, resp) => {
+        app.get('/movies/tmdb/:id', helper.ensureAuthenticated, (req, resp) => {
             Movie.find({ tmdb_id: req.params.id })
                 .then((data) => {
                     if (data.length == 0) {
@@ -90,7 +92,7 @@ const handleMoviesByTmdbId = (app, Movie) => {
     }
     // Returns all the movies wgo average ratinfg is between the two supplied values. if min is klarder then max return error message
 const handleMoviesByRatings = (app, Movie) => {
-        app.get('/movies/ratings/:min/:max', async(req, resp) => {
+        app.get('/movies/ratings/:min/:max',helper.ensureAuthenticated,  async(req, resp) => {
             if (req.params.min > req.params.max) {
                 console.log("min is bigger then max")
                 resp.json({ message: "You put your Minimum value to be bigger then your maxium value" });
@@ -110,7 +112,7 @@ const handleMoviesByRatings = (app, Movie) => {
     }
     // returns movies whose title contians (somewhere) the provided text. This search should be case insensitive 
 const handleMoviesByTitle = (app, Movie) => {
-    app.get('/movies/title/:title', (req, resp) => {
+    app.get('/movies/title/:title',helper.ensureAuthenticated,  (req, resp) => {
 
         Movie.find({ title: new RegExp(req.params.title, 'i') })
             .then((data) => {
@@ -127,7 +129,7 @@ const handleMoviesByTitle = (app, Movie) => {
 }
 
 const handleMoviesByGenre = (app, Movie) => {
-    app.get('/movies/genre/:genre', (req, resp) => {
+    app.get('/movies/genre/:genre', helper.ensureAuthenticated, (req, resp) => {
         Movie.find({ 'details.genres.name': new RegExp(`${req.params.genre}`, 'i') })
             .then((data) => {
                 if (data.length === 0) {
@@ -143,7 +145,7 @@ const handleMoviesByGenre = (app, Movie) => {
 }
 
 const handleLoginPage = (app, User) => {
-    app.get('/', (req, res) => {
+    app.get('/login', (req, res) => {
         res.render('../index.ejs')
     })
 }

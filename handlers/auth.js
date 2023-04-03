@@ -15,6 +15,7 @@ const strategy = new LocalStrategy(localOptions, async(email, password, done) =>
         }
         const passwordIsValid = await user.isValidPassword(password);
         if (!passwordIsValid) {
+            console.log("password is invalid")
             return done(null, false, { message: 'password is invalid.' });
         }
 
@@ -24,13 +25,18 @@ const strategy = new LocalStrategy(localOptions, async(email, password, done) =>
     }
 });
 
-passport.use(strategy);
-passport.serializeUser((user, done) => {
-    done(null, user.id);
+// exporting the strategy and renaming it local login 
+passport.use('localLogin', strategy);
+//passport.use(strategy); // localLogin, strategy to handle User login
+passport.serializeUser((user, done) => {done(null, user.email)
 });
-passport.deserializeUser(async(email, done) => {
+// passport.deserializeUser(async(email, done) => {
+//     UserModel.findOne({ email: email })
+//         .then(user => {
+//             done(null, user);
+//         });
+// });
+passport.deserializeUser((email, done) => {
     UserModel.findOne({ email: email })
-        .then(user => {
-            done(null, user);
+        .then((user) =>  done(null, user));
         });
-});

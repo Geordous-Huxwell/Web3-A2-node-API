@@ -24,8 +24,13 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.isValidPassword = async function(password) {
+    // const user = this;
+    // console.log(user)
+    // const hash = user.password_bcrypt
+    // const compare= await bcrypt.compare(formPassword,hash);
+    // return compare;
     try {
-        return await bcrypt.compare(user.password, this.password_bcrypt);
+        return await bcrypt.compare(password, this.password_bcrypt);
     } catch (error) {
         throw new Error(error);
     }
