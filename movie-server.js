@@ -63,8 +63,9 @@ app.get('/', helper.ensureAuthenticated, (req, res) => {
 
 app.get('/login', helper.redirectLoggedIn, (req, res) => {
     console.log("get login")
-    res.render('../index.ejs')
+    res.render('../index.ejs', { message: req.flash('info') })
 })
+
 app.post('/login', async(req, resp, next) => {
     console.log("post login")
     passport.authenticate('localLogin', function(err, user, info) {
@@ -72,7 +73,8 @@ app.post('/login', async(req, resp, next) => {
             return next(err);
         }
         if (!user) {
-            return resp.render('../index.ejs', { message: req.flash('info') });
+            req.flash('error', 'Invalid username or password');
+            return resp.render('../index.ejs', { message: req.flash('error') });
         }
         console.log("user is " + user)
         req.logIn(user, function(err) {
@@ -88,13 +90,17 @@ app.post('/login', async(req, resp, next) => {
     })(req, resp, next);
 });
 app.get('/logout', (req, resp) => {
+    req.flash('info', 'your were logged out');
+
     req.logout(function(err) {
         if (err) {
             return next(err);
         }
     });
-    req.flash('info', 'your were logged out');
-    resp.render('login', { message: req.flash('info') });
+    resp.render('../index.ejs', { message: req.flash('info') })
+
+    // resp.redirect('/login');
+    // resp.render('login', { message: req.flash('info') });
 });
 
 

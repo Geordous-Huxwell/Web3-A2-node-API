@@ -26,8 +26,8 @@
             color: #333;
         }
         
-        input[type="text"],
-        input[type="password"] {
+        #email,
+        #password {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
@@ -58,7 +58,6 @@
         }
         
         .error-message {
-            display: none;
             color: red;
             font-size: 1.2rem;
             margin-top: 10px;
@@ -76,7 +75,11 @@
             <input type="password" id="password" name="password" placeholder="Enter your password">
             <input type="submit" value="Login">
         </form>
-        <p class="error-message">Incorrect username or password.</p>
+        <% if (message) { %>
+            <p class="error-message">hello
+                <%= message %>
+            </p>
+            <% } %>
     </div>
 </body>
 
