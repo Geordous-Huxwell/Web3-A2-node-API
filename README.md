@@ -70,13 +70,6 @@ THEN
 GIVEN
     user is logged in
 WHEN
-    user navigates to <a href='https://cake-elite-terrier.glitch.me/movies/limit/5'>
-THEN
-    the api will return 5 movies
-
-GIVEN
-    user is logged in
-WHEN
     user navigates to <a href='https://cake-elite-terrier.glitch.me/movies/limit/-1'> or <a href='https://cake-elite-terrier.glitch.me/movies/limit/201'> 
 THEN
     a message will be displayed: "Inavlid amount. Limit must be between 1 and 200"
