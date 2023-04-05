@@ -56,13 +56,11 @@ const handleMoviesByYear = (app, Movie) => {
 const handleMoviesWithLimit = (app, Movie) => {
     app.get('/movies/limit/:num',helper.ensureAuthenticated, (req, resp) => {
         // set the initiial limit 
-        let limit;
-        if (200 < (parseInt(req.params.num))) {
-            limit = 200;
+       const limit = parseInt(req.params.num);
+        if (200 < limit || limit<=0) {
+            resp.status(200).json(`Invalid Amount. Limit must be between 1 and 200`);
         } else {
-            limit = parseInt(req.params.num);
-        }
-        Movie.find()
+            Movie.find()
             .limit(limit)
             .then((data) => {
                 resp.status(200).json(data);
@@ -70,6 +68,8 @@ const handleMoviesWithLimit = (app, Movie) => {
             .catch((err) => {
                 resp.status(500).json({ message: "Unable to connect to movies handle moviews with limits " })
             })
+        }
+        
     })
 }
 
@@ -80,22 +80,24 @@ const handleMoviesByTmdbId = (app, Movie) => {
             Movie.find({ tmdb_id: req.params.id })
                 .then((data) => {
                     if (data.length == 0) {
-                        resp.status(500).json({ message: "No movie found matching TMDB ID " + req.params.id })
+                        // res.status(500).json(`No movie found matching ID ${req.params.id}`)
+                        resp.status(500).json(`No movie found matching TMDB ID ${req.params.id }`)
                     } else {
                         resp.status(200).json(data)
                     }
                 })
                 .catch((err) => {
-                    resp.status(500).json({ message: "Unable to connect to movies bc tmbdid styff " })
+                    resp.status(500).json({ message: "Unable to connect to movies" })
                 })
         })
     }
     // Returns all the movies wgo average ratinfg is between the two supplied values. if min is klarder then max return error message
 const handleMoviesByRatings = (app, Movie) => {
         app.get('/movies/ratings/:min/:max',helper.ensureAuthenticated,  async(req, resp) => {
+            console.log("min value is:", req.params.min)
             if (req.params.min > req.params.max) {
                 console.log("min is bigger then max")
-                resp.json({ message: "You put your Minimum value to be bigger then your maxium value" });
+                resp.json(`You put your Minimum value to be bigger then your maxium value` );
             } else {
                 Movie.find()
                     .where("ratings.average")
@@ -117,7 +119,7 @@ const handleMoviesByTitle = (app, Movie) => {
         Movie.find({ title: new RegExp(req.params.title, 'i') })
             .then((data) => {
                 if (data.length == 0) {
-                    resp.json({ message: "Invalid input" })
+                    resp.json(`Invalid input` )
                 } else {
                     resp.json(data)
                 }

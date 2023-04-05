@@ -4,76 +4,82 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Page</title>
-    <style>
-        body {
-            background-color: #f7f7f7ea;
-            font-family: Arial, sans-serif;
-        }
-        
-        .container {
-            margin: 0 auto;
-            max-width: 400px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 3px;
-            background-color: #f7f7f7;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-            font-size: 1.2rem;
-            color: #333;
-        }
-        
-        input[type="submit"] {
-            width: 50%;
-            margin: 0 auto;
-            display: block;
-            padding: 10px;
-            border: none;
-            border-radius: 3px;
-            background-color: #4CAF50;
-            color: #fff;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        
-        input[type="submit"]:hover {
-            background-color: #3e8e41;
-        }
-        
-        .error-message {
-            display: none;
-            color: red;
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
 <body>
-    <div class="container">
+    <div class="containerHome">
         <h1>Home Page </h1>
-        Welcome
-        <%= user.details.firstname %>
-            <%= user.details.lastname %>
-                <p>
-                    <a href="/logout">Logout</a>
+        <div class="welcome-container">
+            <img src="<%= user.picture.large %>" id="profilePic"><h2>
+            <h1 class="welcome-message">Welcome back <span>
+                 <%= user.details.firstname %>
+                <%= user.details.lastname %></span> !
+            </h1>
+
+        </div>
+       
+       
+        <ul style="list-style-type: none;">
+            <li><b>See all Movies</b><a href="/movies" id="fakeButton">Go</a></li>
+            <li>
+                  <form method="GET" onsubmit="event.preventDefault(); location.href='/movies/' + document.getElementById('linkID').value;">
+                    <label for="linkID">Enter Movie ID your looking for:</label>
+                    <input type="number" id="linkID" name="linkID">
+                    <button type="submit" id="fakeButton">Go</button>
+                  </form>
+            </li>
+            <li>
+                <form method="GET" onsubmit="event.preventDefault(); location.href='/movies/tmdb/' + document.getElementById('tmdblinkID').value;">
+                    <label for="tmdblinkID">Search By tmbd id:</label>
+                    <input type="number" id="tmdblinkID" name="tmdblinkID">
+                    <button type="submit" id="fakeButton">Go</button>
+                  </form>
+            </li>
+            <li>
+                <form method="GET" onsubmit="event.preventDefault(); location.href='/movies/limit/' + document.getElementById('limit').value;">
+                    <label for="limit">Shows Movies with a limit of: </label>
+                    <input type="number" id="limit" min="1" name="limit">
+                    <button type="submit" id="fakeButton">Go</button>
+                  </form>
+            </li>
+            <li>
+                <form method="GET" onsubmit="event.preventDefault(); location.href='/movies/year/' + document.getElementById('minYear').value +'/'+document.getElementById('maxYear').value ;">
+                    <p><b>Show movies in year range: </b></p>
+                    <label for="minYear">Min: </label>
+                    <input type="number" id="minYear" placeholder='YYYY' name="minYear">
+                    <label for="maxYear">Max: </label>
+                    <input type="number" id="maxYear" placeholder='YYYY' name="maxYear">
+                    <button type="submit" id="fakeButton">Go</button>
+                  </form>
+            </li>
+            <li>
+                <form method="GET" onsubmit="event.preventDefault(); location.href='/movies/ratings/' + document.getElementById('minRating').value +'/'+document.getElementById('maxRating').value ;">
+                    <p><b>Show movies by ratings average in range:</b> </p>
+                    <label for="minRating">Min: </label>
+                    <input type="number" id="minRating" name="minRating">
+                    <label for="maxRating">Max: </label>
+                    <input type="number" id="maxRating" name="maxRating">
+                    <button type="submit" id="fakeButton">Go</button>
+                  </form>
+            </li>
+            <li>
+                <form method="GET" onsubmit="event.preventDefault(); location.href='/movies/title/' + document.getElementById('title').value ;">
+                    <label for="title">Search Movie Title: </label>
+                    <input type="text" id="title" name="title">
+                    <button type="submit" id="fakeButton">Go</button>
+                  </form>
+            </li>
+            <li>
+                <form method="GET" onsubmit="event.preventDefault(); location.href='/movies/genre/' + document.getElementById('genre').value ;">
+                    <label for="genre">Search Movie Genre: </label>
+                    <input type="text" id="genre" name="genre">
+                    <button type="submit" id="fakeButton">Go</button>
+                  </form>
+            </li>
+        </ul>
+                <p class="logout-button">
+                    <a href="/logout"><button>Logout</button></a>
                 </p>
     </div>
 
