@@ -94,17 +94,32 @@ const handleMoviesByTmdbId = (app, Movie) => {
     // Returns all the movies wgo average ratinfg is between the two supplied values. if min is klarder then max return error message
 const handleMoviesByRatings = (app, Movie) => {
         app.get('/movies/ratings/:min/:max',helper.ensureAuthenticated,  async(req, resp) => {
-            console.log("min value is:", req.params.min)
-            if (req.params.min > req.params.max) {
+            // console.log("min value is:", req.params.min)
+            // console.log("min value type is:", typeof req.params.min)
+            // console.log("max value is:", req.params.max)
+            // console.log("max value type is:", typeof req.params.max)
+            // console.log("string min less than string max? ", req.params.min < req.params.max)
+            // console.log("num min less than num max? ", parseInt(req.params.min) < parseInt(req.params.max))
+
+
+
+            const min= parseInt(req.params.min)
+            const max = parseInt(req.params.max)
+            if (min>max) {
                 console.log("min is bigger then max")
                 resp.json(`You put your Minimum value to be bigger then your maxium value` );
             } else {
                 Movie.find()
                     .where("ratings.average")
-                    .gt(req.params.min)
-                    .lt(req.params.max)
+                    .gt(min)
+                    .lt(max)
                     .then((data) => {
-                        resp.json(data);
+                        if(data.length == 0 ){
+                            resp.status(500).json(`No movies found with the average ratings of ${req.params.min} - ${req.params.max}`)
+                        }else{
+                            resp.json(data);
+                        }
+                        
                     })
                     .catch((err) => {
                         resp.json({ message: "Unable to connect to movies vis avg ratings" });
@@ -119,7 +134,7 @@ const handleMoviesByTitle = (app, Movie) => {
         Movie.find({ title: new RegExp(req.params.title, 'i') })
             .then((data) => {
                 if (data.length == 0) {
-                    resp.json(`Invalid input` )
+                    resp.json(`No movies found with given input` )
                 } else {
                     resp.json(data)
                 }
