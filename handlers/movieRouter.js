@@ -1,7 +1,7 @@
 const helper = require('./helpers.js');
 
 const handleAllMovies = (app, Movie) => {
-    app.get('/movies', helper.ensureAuthenticated , (req, res) => {
+    app.get('/movies', helper.ensureAuthenticated, (req, res) => {
         Movie.find()
             .then((movies) => {
                 res.status(200).json(movies)
@@ -13,7 +13,7 @@ const handleAllMovies = (app, Movie) => {
 }
 
 const handleMovieById = (app, Movie) => {
-    app.get('/movies/:id',helper.ensureAuthenticated, (req, res) => {
+    app.get('/movies/:id', helper.ensureAuthenticated, (req, res) => {
         Movie.find({ id: req.params.id })
             .then((movie) => {
                 if (movie.length === 0) {
@@ -29,7 +29,7 @@ const handleMovieById = (app, Movie) => {
 }
 
 const handleMoviesByYear = (app, Movie) => {
-        app.get('/movies/year/:min/:max',helper.ensureAuthenticated, async(req, res) => {
+        app.get('/movies/year/:min/:max', helper.ensureAuthenticated, async(req, res) => {
             const moviesInRange = []
             const minYear = parseInt(req.params.min)
             const maxYear = parseInt(req.params.max)
@@ -54,7 +54,7 @@ const handleMoviesByYear = (app, Movie) => {
     }
     // get all movies within a limit 
 const handleMoviesWithLimit = (app, Movie) => {
-    app.get('/movies/limit/:num',helper.ensureAuthenticated, (req, resp) => {
+    app.get('/movies/limit/:num', helper.ensureAuthenticated, (req, resp) => {
         // set the initiial limit 
        const limit = parseInt(req.params.num);
         if (200 < limit || limit<=0) {
@@ -114,7 +114,7 @@ const handleMoviesByRatings = (app, Movie) => {
     }
     // returns movies whose title contians (somewhere) the provided text. This search should be case insensitive 
 const handleMoviesByTitle = (app, Movie) => {
-    app.get('/movies/title/:title',helper.ensureAuthenticated,  (req, resp) => {
+    app.get('/movies/title/:title', helper.ensureAuthenticated, (req, resp) => {
 
         Movie.find({ title: new RegExp(req.params.title, 'i') })
             .then((data) => {
