@@ -90,7 +90,7 @@ app.post('/login', async(req, resp, next) => {
     })(req, resp, next);
 });
 app.get('/logout', (req, resp) => {
-    req.flash('info', 'your were logged out');
+    req.flash('info', 'you were logged out');
 
     req.logout(function(err) {
         if (err) {

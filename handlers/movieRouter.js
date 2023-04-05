@@ -56,20 +56,20 @@ const handleMoviesByYear = (app, Movie) => {
 const handleMoviesWithLimit = (app, Movie) => {
     app.get('/movies/limit/:num', helper.ensureAuthenticated, (req, resp) => {
         // set the initiial limit 
-       const limit = parseInt(req.params.num);
-        if (200 < limit || limit<=0) {
+        const limit = parseInt(req.params.num);
+        if (200 < limit || limit <= 0) {
             resp.status(200).json(`Invalid Amount. Limit must be between 1 and 200`);
         } else {
             Movie.find()
-            .limit(limit)
-            .then((data) => {
-                resp.status(200).json(data);
-            })
-            .catch((err) => {
-                resp.status(500).json({ message: "Unable to connect to movies handle moviews with limits " })
-            })
+                .limit(limit)
+                .then((data) => {
+                    resp.status(200).json(data);
+                })
+                .catch((err) => {
+                    resp.status(500).json({ message: "Unable to connect to movies handle movies with limits " })
+                })
         }
-        
+
     })
 }
 
@@ -87,7 +87,7 @@ const handleMoviesByTmdbId = (app, Movie) => {
                     }
                 })
                 .catch((err) => {
-                    resp.status(500).json({ message: "Unable to connect to movies" })
+                    resp.status(500).json({ message: "Unable to connect to movies database." })
                 })
         })
     }
@@ -107,7 +107,7 @@ const handleMoviesByRatings = (app, Movie) => {
             const max = parseInt(req.params.max)
             if (min>max) {
                 console.log("min is bigger then max")
-                resp.json(`You put your Minimum value to be bigger then your maxium value` );
+                resp.json(`Invalid range. Min rating (${req.params.min}) is greater than max rating (${req.params.max}).` );
             } else {
                 Movie.find()
                     .where("ratings.average")
@@ -134,7 +134,7 @@ const handleMoviesByTitle = (app, Movie) => {
         Movie.find({ title: new RegExp(req.params.title, 'i') })
             .then((data) => {
                 if (data.length == 0) {
-                    resp.json(`No movies found with given input` )
+                    resp.json({ message: `No movies titles found matching ${req.params.title}` })
                 } else {
                     resp.json(data)
                 }
