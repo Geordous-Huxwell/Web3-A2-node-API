@@ -14,12 +14,12 @@ const strategy = new LocalStrategy(localOptions, async(email, password, done) =>
         const user = await UserModel.findOne({ email: email });
         console.log("user", user)
         if (!user) {
-            return done(null, false, { message: 'email not found.' });
+            return done(null, false, { message: 'Email not found.' });
         }
         const passwordIsValid = await user.isValidPassword(password);
         if (!passwordIsValid) {
             console.log("password is invalid")
-            return done(null, false, { message: 'password is invalid.' });
+            return done(null, false, { message: 'Password is invalid.' });
         }
 
         return done(null, user, { message: 'login successful.' });

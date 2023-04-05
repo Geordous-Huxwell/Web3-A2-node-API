@@ -21,7 +21,7 @@ h1 {
 
 #email,
 #password {
-    width: 100%;
+    /* width: 100%; */
     padding: 10px;
     margin-bottom: 20px;
     border: none;
@@ -55,3 +55,137 @@ input[type="submit"]:hover {
     font-size: 1.2rem;
     margin-top: 10px;
 }
+
+
+/* From home  */
+#fakeButton {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin: 6px;
+  }
+
+  .containerHome {
+    margin: 1rem auto;
+    /* justify-self: center; */
+    max-width: 1000px; 
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.profile{
+    justify-content: space-between;
+    text-align: center;
+    
+   }
+   #profilePic{
+    border-radius: 25%;
+        display: inline-block;
+        border: 1px solid darkblue;
+        vertical-align: middle;
+   }
+   .welcome-container {
+    padding: 20px; 
+    text-align: center; 
+  }
+ 
+.welcome-message {
+    font-size: 24px; 
+    font-weight: bold; 
+    color: darkblue;
+  }
+  .welcome-message span{
+      text-transform: uppercase;
+  }
+  ul {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0;
+  }
+  
+  li {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-width: 200px;
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input[type="number"],
+  input[type="text"] {
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 200px;
+    box-sizing: border-box;
+  }
+  
+  button[type="submit"] {
+    padding: 10px 20px;
+    /* background-color: #0077ff; */
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  /* button[type="submit"]:hover {
+    background-color: #0053ba;
+  } */
+  form p,label{ 
+      text-align: center;
+  }
+  .logout-button , .logout-button a:visited , .logout-button a button{
+    background-color: #da4c4c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    text-align: center;
+  width: fit-content;
+  align-items: center;
+  display: center;
+  margin: auto;
+  text-decoration: none;
+  }
+  .logout-button a{
+    text-decoration: none;
+  }
+  .logout-button:hover {
+    background-color: #cc0000;
+    text-decoration: none;
+  }
+  
