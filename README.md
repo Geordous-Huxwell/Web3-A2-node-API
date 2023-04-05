@@ -148,6 +148,13 @@ THEN
 GIVEN
     user is logged in
 WHEN
+    user navigates to <a href='https://cake-elite-terrier.glitch.me/movies/ratings/11/12'>
+THEN
+    a message will be displayed "No movies found with the average ratings 11 - 12."
+
+GIVEN
+    user is logged in
+WHEN
     user navigates to <a href='https://cake-elite-terrier.glitch.me/movies/title/MERI'>
 THEN
     the api will return all movies with "meri" in the title, ignoring case
