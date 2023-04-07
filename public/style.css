@@ -43,7 +43,6 @@ h1 {
 
 #email,
 #password {
-    /* width: 100%; */
     padding: 10px;
     margin-bottom: 20px;
     border: none;
@@ -100,8 +99,7 @@ input[type="submit"]:hover {
 
 .containerHome {
     margin: 1rem auto;
-    /* justify-self: center; */
-    max-width: 1000px;
+    max-width: 1000px; 
     padding: 1.5rem;
     background-color: #ffffff90;
     border-radius: 5px;

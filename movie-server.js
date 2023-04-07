@@ -51,23 +51,18 @@ movieRouter.handleMoviesByTmdbId(app, Movie)
 movieRouter.handleMoviesByRatings(app, Movie)
 movieRouter.handleMoviesByGenre(app, Movie)
 movieRouter.handleMoviesByTitle(app, Movie)
-    //movieRouter.handleLoginPage(app, User)
+
 
 // add site requests?
 app.get('/', helper.ensureAuthenticated, (req, res) => {
     res.render('../views/home.ejs', { user: req.user });
 })
 
-// login and logout routers 
-//movieRouter.handleLoginPage(app, User)
-
 app.get('/login', helper.redirectLoggedIn, (req, res) => {
-    console.log("get login")
     res.render('../index.ejs', { message: req.flash('info') })
 })
 
 app.post('/login', async(req, resp, next) => {
-    console.log("post login")
     passport.authenticate('localLogin', function(err, user, info) {
         if (err) {
             return next(err);
@@ -76,31 +71,22 @@ app.post('/login', async(req, resp, next) => {
             req.flash('error', 'Invalid username or password');
             return resp.render('../index.ejs', { message: req.flash('error') });
         }
-        console.log("user is " + user)
         req.logIn(user, function(err) {
             if (err) {
                 return next(err);
             }
             return resp.redirect('/');
         });
-
-        // successRedirect: '/',
-        // failureRedirect: '/login',
-        // failureFlash: true
     })(req, resp, next);
 });
 app.get('/logout', (req, resp) => {
     req.flash('info', 'you were logged out');
-
     req.logout(function(err) {
         if (err) {
             return next(err);
         }
     });
     resp.render('../index.ejs', { message: req.flash('info') })
-
-    // resp.redirect('/login');
-    // resp.render('login', { message: req.flash('info') });
 });
 
 

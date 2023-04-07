@@ -86,7 +86,7 @@ GIVEN
 WHEN
     user navigates to <a href='https://cake-elite-terrier.glitch.me/movies/9'>
 THEN
-    a message will be displayed: ""No movie found matching ID 9""
+    a message will be displayed: "No movie found matching ID 9"
 
 GIVEN
     user is logged in
@@ -101,7 +101,7 @@ GIVEN
 WHEN
     user navigates to <a href='https://cake-elite-terrier.glitch.me/movies/tmdb/9'>
 THEN
-    a message will be displayed: ""No movie found matching TMDB ID 9""
+    a message will be displayed: "No movie found matching TMDB ID 9"
 
 GIVEN
     user is logged in
@@ -136,14 +136,14 @@ GIVEN
 WHEN
     user navigates to <a href='https://cake-elite-terrier.glitch.me/movies/ratings/6/4'>
 THEN
-    a message will be displayed "Invalid range. Min year 6 is greater than max year 4."
+    a message will be displayed "Invalid range. Min rating 6 is greater than max rating 4."
 
 GIVEN
     user is logged in
 WHEN
     user navigates to <a href='https://cake-elite-terrier.glitch.me/movies/ratings/11/12'>
 THEN
-    a message will be displayed "No movies found with the average ratings 11 - 12."
+    a message will be displayed "No movies found with the average ratings 11 - 12."h4
 
 GIVEN
     user is logged in

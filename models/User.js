@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+
 // define a schema that maps to the structure of the data in MongoDB
 const userSchema = new mongoose.Schema({
     id: Number,
@@ -24,11 +25,6 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.isValidPassword = async function(password) {
-    // const user = this;
-    // console.log(user)
-    // const hash = user.password_bcrypt
-    // const compare= await bcrypt.compare(formPassword,hash);
-    // return compare;
     try {
         return await bcrypt.compare(password, this.password_bcrypt);
     } catch (error) {

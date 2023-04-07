@@ -1,5 +1,9 @@
 const helper = require('./helpers.js');
-
+/**This function gets all the movies 
+ * 
+ * @param {*} app 
+ * @param {*} Movie 
+ */
 const handleAllMovies = (app, Movie) => {
     app.get('/movies', helper.ensureAuthenticated, (req, res) => {
         Movie.find()
@@ -11,7 +15,12 @@ const handleAllMovies = (app, Movie) => {
             })
     })
 }
-
+/** This function is getting a movie from the api based on a given movie id, while still 
+ *  ensuring that the user is still authentic and logged in 
+ * 
+ * @param {} app 
+ * @param {*} Movie 
+ */
 const handleMovieById = (app, Movie) => {
     app.get('/movies/:id', helper.ensureAuthenticated, (req, res) => {
         Movie.find({ id: req.params.id })
@@ -27,13 +36,18 @@ const handleMovieById = (app, Movie) => {
             })
     })
 }
-
+/** This function gets all the movies from api based on a given year range, given th min and max amount of years,
+ *  it also ensures when attrevieing this data that the user is still logged in. In this function we also confirm 
+ *  that the input is valid. 
+ * 
+ * @param {} app 
+ * @param {*} Movie 
+ */
 const handleMoviesByYear = (app, Movie) => {
         app.get('/movies/year/:min/:max', helper.ensureAuthenticated, async(req, res) => {
             const moviesInRange = []
             const minYear = parseInt(req.params.min)
             const maxYear = parseInt(req.params.max)
-
             if (minYear > maxYear) {
                 res.status(500).json(`Invalid range. Min year (${req.params.min}) is greater than max year (${req.params.max}).`)
             }
@@ -53,7 +67,12 @@ const handleMoviesByYear = (app, Movie) => {
         })
     }
     // get all movies within a limit 
-const handleMoviesWithLimit = (app, Movie) => {
+    /**
+     * this function gets movies up to a given limit. it will also respond if you dont put in a valid range 
+     * @param {*} app 
+     * @param {*} Movie 
+     */
+    const handleMoviesWithLimit = (app, Movie) => {
     app.get('/movies/limit/:num', helper.ensureAuthenticated, (req, resp) => {
         // set the initiial limit 
         const limit = parseInt(req.params.num);
@@ -80,7 +99,6 @@ const handleMoviesByTmdbId = (app, Movie) => {
             Movie.find({ tmdb_id: req.params.id })
                 .then((data) => {
                     if (data.length == 0) {
-                        // res.status(500).json(`No movie found matching ID ${req.params.id}`)
                         resp.status(500).json(`No movie found matching TMDB ID ${req.params.id }`)
                     } else {
                         resp.status(200).json(data)
@@ -94,19 +112,10 @@ const handleMoviesByTmdbId = (app, Movie) => {
     // Returns all the movies wgo average ratinfg is between the two supplied values. if min is klarder then max return error message
 const handleMoviesByRatings = (app, Movie) => {
         app.get('/movies/ratings/:min/:max',helper.ensureAuthenticated,  async(req, resp) => {
-            // console.log("min value is:", req.params.min)
-            // console.log("min value type is:", typeof req.params.min)
-            // console.log("max value is:", req.params.max)
-            // console.log("max value type is:", typeof req.params.max)
-            // console.log("string min less than string max? ", req.params.min < req.params.max)
-            // console.log("num min less than num max? ", parseInt(req.params.min) < parseInt(req.params.max))
-
-
 
             const min= parseInt(req.params.min)
             const max = parseInt(req.params.max)
             if (min>max) {
-                console.log("min is bigger then max")
                 resp.json(`Invalid range. Min rating (${req.params.min}) is greater than max rating (${req.params.max}).` );
             } else {
                 Movie.find()
@@ -118,8 +127,7 @@ const handleMoviesByRatings = (app, Movie) => {
                             resp.status(500).json(`No movies found with the average ratings of ${req.params.min} - ${req.params.max}`)
                         }else{
                             resp.json(data);
-                        }
-                        
+                        }  
                     })
                     .catch((err) => {
                         resp.json({ message: "Unable to connect to movies vis avg ratings" });
@@ -127,7 +135,11 @@ const handleMoviesByRatings = (app, Movie) => {
             }
         })
     }
-    // returns movies whose title contians (somewhere) the provided text. This search should be case insensitive 
+    /**returns movies whose title contians (somewhere) the provided text. This search should be case insensitive 
+     * 
+     * @param {*} app 
+     * @param {*} Movie 
+     */
 const handleMoviesByTitle = (app, Movie) => {
     app.get('/movies/title/:title', helper.ensureAuthenticated, (req, resp) => {
 
@@ -144,7 +156,11 @@ const handleMoviesByTitle = (app, Movie) => {
             })
     })
 }
-
+/** returns movies whos genre is from the given output. it will verify that the movie genre is a valid genre 
+ *  
+ * @param {} app 
+ * @param {*} Movie 
+ */
 const handleMoviesByGenre = (app, Movie) => {
     app.get('/movies/genre/:genre', helper.ensureAuthenticated, (req, resp) => {
         Movie.find({ 'details.genres.name': new RegExp(`${req.params.genre}`, 'i') })
@@ -160,7 +176,11 @@ const handleMoviesByGenre = (app, Movie) => {
             })
     })
 }
-
+/**
+ * this will redirect to the login page
+ * @param {} app 
+ * @param {*} User 
+ */
 const handleLoginPage = (app, User) => {
     app.get('/login', (req, res) => {
         res.render('../index.ejs')
