@@ -1,6 +1,28 @@
 body {
     background-color: #f7f7f7;
     font-family: Arial, sans-serif;
+    background-image: url('./images/background-1.png');
+    background-size: cover;
+}
+
+header {
+    background-color: #3333338b;
+    color: #fff;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+}
+
+.header-content {
+    max-width: 960px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+    margin: 0;
+    margin-top: 10px;
 }
 
 .container {
@@ -53,11 +75,14 @@ input[type="submit"]:hover {
     color: red;
     font-size: 1.2rem;
     margin-top: 10px;
+    /* center message */
+    text-align: center;
 }
 
 
 /* From home  */
-#fakeButton {
+
+.goButton {
     display: inline-block;
     padding: 4px 10px;
     font-size: 14px;
@@ -70,51 +95,56 @@ input[type="submit"]:hover {
     border: none;
     cursor: pointer;
     margin: 6px;
-  }
+}
 
-  .containerHome {
+.containerHome {
     margin: 1rem auto;
     max-width: 1000px; 
     padding: 1.5rem;
-    background-color: #fff;
+    background-color: #ffffff90;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.profile{
+
+.profile {
     justify-content: space-between;
     text-align: center;
-   }
-   #profilePic{
+}
+
+#profilePic {
     border-radius: 25%;
-        display: inline-block;
-        border: 1px solid darkblue;
-        vertical-align: middle;
-   }
-   .welcome-container {
-    padding: 20px; 
-    text-align: center; 
-  }
- 
+    display: inline-block;
+    border: 1px solid darkblue;
+    vertical-align: middle;
+}
+
+.welcome-container {
+    padding: 20px;
+    text-align: center;
+}
+
 .welcome-message {
-    font-size: 24px; 
-    font-weight: bold; 
+    font-size: 24px;
+    font-weight: bold;
     color: darkblue;
-  }
-  .welcome-message span{
-      text-transform: uppercase;
-  }
-  ul {
+}
+
+.welcome-message span {
+    text-transform: uppercase;
+}
+
+ul {
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 0;
-  }
-  
-  li {
+}
+
+li {
     margin: 10px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 3px solid #e1e0e0;
     border-radius: 5px;
     min-width: 200px;
     max-width: 200px;
@@ -122,21 +152,21 @@ input[type="submit"]:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-  
-  form {
+}
+
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  
-  label {
+}
+
+label {
     font-weight: bold;
     margin-bottom: 5px;
-  }
-  
-  input[type="number"],
-  input[type="text"] {
+}
+
+input[type="number"],
+input[type="text"] {
     padding: 5px;
     margin-bottom: 10px;
     border-radius: 3px;
@@ -144,9 +174,9 @@ input[type="submit"]:hover {
     width: 100%;
     max-width: 200px;
     box-sizing: border-box;
-  }
-  
-  button[type="submit"] {
+}
+
+button[type="submit"] {
     padding: 10px 20px;
     /* background-color: #0077ff; */
     color: #fff;
@@ -154,15 +184,21 @@ input[type="submit"]:hover {
     border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
-  }
-  
-  /* button[type="submit"]:hover {
+}
+
+
+/* button[type="submit"]:hover {
     background-color: #0053ba;
   } */
-  form p,label{ 
-      text-align: center;
-  }
-  .logout-button , .logout-button a:visited , .logout-button a button{
+
+form p,
+label {
+    text-align: center;
+}
+
+.logout-button,
+.logout-button a:visited,
+.logout-button a button {
     background-color: #da4c4c;
     color: #fff;
     border: none;
@@ -172,17 +208,35 @@ input[type="submit"]:hover {
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
     text-align: center;
-  width: fit-content;
-  align-items: center;
-  display: center;
-  margin: auto;
-  text-decoration: none;
-  }
-  .logout-button a{
+    width: fit-content;
+    align-items: center;
+    display: center;
+    margin: auto;
     text-decoration: none;
-  }
-  .logout-button:hover {
+}
+
+.logout-button a {
+    text-decoration: none;
+}
+
+.logout-button:hover {
     background-color: #cc0000;
     text-decoration: none;
-  }
-  
+}
+
+footer {
+    background-color: #3333338b;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+footer a {
+    color: #f2f2f2;
+}
+
+footer a:hover {
+    color: #f2f2f2;
+    text-decoration: underline;
+}
