@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// define a schema that maps to the structure of the data in MongoDB
 const userSchema = new mongoose.Schema({
+
     id: Number,
     details: {
         firstname: String,
@@ -32,5 +32,4 @@ userSchema.methods.isValidPassword = async function(password) {
     }
 }
 
-// export the model
 module.exports = mongoose.model('User', userSchema, 'users');

@@ -10,7 +10,7 @@
 <body>
     <div class="containerHome">
         <div class="welcome-container">
-            <img src="<%= user.picture.large %>" id="profilePic">
+            <img src="<%= user.picture.large %>" id="profilePic" alt="User Profile Photo">
             <h2>
                 <h1 class="welcome-message">Welcome back <span>
                  <%= user.details.firstname %>
@@ -18,7 +18,6 @@
                 </h1>
 
         </div>
-
 
         <ul style="list-style-type: none;">
             <li><b>See all Movies</b><a href="/movies" class="goButton">Go</a></li>
