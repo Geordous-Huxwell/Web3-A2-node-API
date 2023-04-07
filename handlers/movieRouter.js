@@ -200,5 +200,4 @@ module.exports = {
     handleMoviesByRatings,
     handleMoviesByTitle,
     handleMoviesByGenre,
-    handleLoginPage
 }
